@@ -1,8 +1,10 @@
 from unicurses import *
 import importlib
 import logging
+import time
 
 logger = logging.getLogger(__name__)
+
 
 config = {}
 stdscr = initscr()
@@ -11,6 +13,13 @@ loaded = {} #dict of loaded modules
 
 def init():
     global io_state
+    
+    get_time=time.strftime("%Y-%m-%d", time.localtime())
+    
+    logging.basicConfig(filename=f"logs/{get_time}.log",
+                        encoding="utf-8",
+                        level=logging.DEBUG)
+    
     noecho()
     cbreak()
     keypad(stdscr,True)
@@ -18,7 +27,6 @@ def init():
         start_color()
     curs_set(2)
     io_state = "main_menu"
-
 
 def close():
     echo()
@@ -52,7 +60,7 @@ def main():
     command_string = ""
     
     if "main_menu" in loaded:
-        loaded["main_menu"].main.declare_req(stdscr)
+        loaded["main_menu"].main.declare_req(stdscr,logger)
         loaded["main_menu"].main.load()
         
         loaded["main_menu"].main.loop()
