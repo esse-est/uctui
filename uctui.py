@@ -1,18 +1,23 @@
 from unicurses import *
-import apps.main_menu as mm
+import importlib
+import logging
+
+logger = logging.getLogger(__name__)
 
 config = {}
 stdscr = initscr()
-io_state = "command"
+io_state = ""
+loaded = {} #dict of loaded modules
 
 def init():
+    global io_state
     noecho()
     cbreak()
     keypad(stdscr,True)
     if config["is_color"] == "True":
         start_color()
     curs_set(2)
-    
+    io_state = "main_menu"
 
 
 def close():
@@ -29,21 +34,34 @@ def pull_config(): #pulls config.txt, strips it, removes comments, and formats i
                 i=i.split(":")
                 if len(i) == 2:
                     config[i[0]] = i[1]
+    
+    if len(config["enabled_apps"]) > 2:
+        for i in config["enabled_apps"].replace("[", "").replace("]", "").split(","):
+            if type(config["enabled_apps"]) != list:
+                config["enabled_apps"] = []
+            config["enabled_apps"].append(i)
 
+def pull_apps():
+    for app in config["enabled_apps"]:
+        if os.path.isfile(f"apps/{app}.py"):
+            loaded[app] = importlib.import_module(f"apps.{app}")
+            loaded[app].main.loop()
+        print(loaded)
 
-
-
-def main_loop():
+def main():
     command_string = ""
     
-    while 1:
-        if io_state == "command":
-            io_stream = getkey()
-            
+    if "main_menu" in loaded:
+        loaded["main_menu"].main.declare_req(stdscr)
+        loaded["main_menu"].main.load()
+        
+        loaded["main_menu"].main.loop()
 
 pull_config()
-init()
+pull_apps()
 
-main_loop()
+init() #unicurses stuff
 
-close()
+main() #effectively just "main_menu wrapper"
+
+close() #closes unicurses out

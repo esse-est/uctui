@@ -1,13 +1,14 @@
 
 
-class app_class:
+class main:
     
-    def declar_req(box: str,req: list):
-        pass
+    
+    def declare_req(box: str, logger):
+        window = box
     
     def load():
         pass
     
-    def main_loop():
+    def loop():
         pass
     

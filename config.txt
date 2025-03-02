@@ -1,4 +1,5 @@
 is_color: True
 
-#list format, relative path
-enabled_apps: []
+#list format, must be in "apps/" folder. py extension not included.
+#path can not include "[", "]", or ' " '
+enabled_apps: [main_menu,empty_text]
