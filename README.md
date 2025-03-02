@@ -3,6 +3,8 @@ UC-TUI (unicurses-terminal user interface) is a Python project, made to be ran o
 
 It consists primarily of `uctui.py` and the `apps/` directory. `uctui.py` is the actual runner, the "TUI" of it all. From there, apps can be called that are found inside the `apps/` directory. This format means that plugins/third party apps can be easily implimented.
 
+
+
 ___
 
 ### Installation
@@ -16,7 +18,7 @@ This isn't included as it most often boils down to user preference, but for quic
 `mkdir .venv && python3 -m venv .venv/bin/activate`
 
 #### Config Values:
-Again, specifics vary based off of personal preference, just have a look through config.txt prior to running UC-TUI for the first time.
+Again, specifics vary based off of personal preference, just have a look through `config.txt` prior to running UC-TUI for the first time.
 
 ___
 

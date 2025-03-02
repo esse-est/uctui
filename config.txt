@@ -1,0 +1,4 @@
+is_color: True
+
+#list format, relative path
+enabled_apps: []
