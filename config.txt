@@ -3,3 +3,5 @@ is_color: False
 #list format, must be in "apps/" folder. py extension not included.
 #path can not include "[", "]", or ' " '
 enabled_apps: [main_menu,empty_text]
+
+do_logs: True

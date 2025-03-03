@@ -16,12 +16,14 @@ def init():
     
     get_time=time.strftime("%Y-%m-%d", time.localtime())
     
-    if not os.path.isfile(f"logs/{get_time}.log"):
-        logging.basicConfig(filename=f"logs/{get_time}.log",
-                            encoding="utf-8",
-                            level=logging.DEBUG)
     
-    
+    if config["do_logs"] == "True":
+        fh = logging.FileHandler(filename=f"logs/{get_time}.log")
+        logging.basicConfig(
+            format="%(asctime)s,%(msecs)d %(levelname)s %(message)s",
+            level=logging.INFO,
+            handlers=[fh]
+        )
     noecho()
     cbreak()
     keypad(stdscr,True)
@@ -58,15 +60,24 @@ def pull_apps():
             loaded[app] = importlib.import_module(f"apps.{app}")
             enabled_holder.append(app)
     
-    config["enabled_apps"]=enabled_holder
+    config["enabled_apps"]=enabled_holder #update to remove non-existent apps
 
 def main():
-    
-    if "main_menu" in loaded:
-        loaded["main_menu"].main.declare_req(stdscr,config,logger)
-        loaded["main_menu"].main.load()
+    return_direction = "main_menu"
+    while True:
+        if return_direction in config["enabled_apps"]:
+            loaded[return_direction].main.declare_req(stdscr,config,logger)
+            loaded[return_direction].main.load()
+            
+            #allows script to return to here before going elsewhere
+            return_direction=loaded[return_direction].main.loop()
         
-        loaded["main_menu"].main.loop()
+        elif return_direction == "NULL":
+            break
+        
+        else:
+            logger.critical("tried loading app not found")
+            break
 
 pull_config()
 pull_apps()
