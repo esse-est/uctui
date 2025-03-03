@@ -50,17 +50,18 @@ def pull_config(): #pulls config.txt, strips it, removes comments, and formats i
             config["enabled_apps"].append(i)
 
 def pull_apps():
+    enabled_holder = []
     for app in config["enabled_apps"]:
         if os.path.isfile(f"apps/{app}.py"):
             loaded[app] = importlib.import_module(f"apps.{app}")
-            loaded[app].main.loop()
-        print(loaded)
+            enabled_holder.append(app)
+    
+    config["enabled_apps"]=enabled_holder
 
 def main():
-    command_string = ""
     
     if "main_menu" in loaded:
-        loaded["main_menu"].main.declare_req(stdscr,logger)
+        loaded["main_menu"].main.declare_req(stdscr,config,logger)
         loaded["main_menu"].main.load()
         
         loaded["main_menu"].main.loop()

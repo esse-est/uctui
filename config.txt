@@ -1,4 +1,4 @@
-is_color: True
+is_color: False
 
 #list format, must be in "apps/" folder. py extension not included.
 #path can not include "[", "]", or ' " '
