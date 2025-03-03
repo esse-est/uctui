@@ -16,9 +16,11 @@ def init():
     
     get_time=time.strftime("%Y-%m-%d", time.localtime())
     
-    logging.basicConfig(filename=f"logs/{get_time}.log",
-                        encoding="utf-8",
-                        level=logging.DEBUG)
+    if not os.path.isfile(f"logs/{get_time}.log"):
+        logging.basicConfig(filename=f"logs/{get_time}.log",
+                            encoding="utf-8",
+                            level=logging.DEBUG)
+    
     
     noecho()
     cbreak()
