@@ -89,7 +89,7 @@ class main:
                     logger.warning("user tried to run erroring command")
 
                 mvaddstr(y, 7, (" " * len(io_command)))
-
+                io_command = ""
                 setsyx(y, 7)
 
 
