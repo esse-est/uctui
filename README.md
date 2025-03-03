@@ -15,7 +15,7 @@ Python3, unicurses installed in venv.
 
 #### Setup Venv/Conda:
 This isn't included as it most often boils down to user preference, but for quick setup run the one-liner:
-`mkdir .venv && python3 -m venv .venv/bin/activate`
+`mkdir .venv && python3 -m venv .venv`
 
 #### Config Values:
 Again, specifics vary based off of personal preference, just have a look through `config.txt` prior to running UC-TUI for the first time.
